@@ -121,8 +121,21 @@ export default {
   },
   created(){
       this.getList()
+      window.addEventListener('resize', this.onResize)
+    },
+    beforeDestroy() {
+      window.removeEventListener('resize', this.onResize)
     },
    methods: {
+    onResize() {
+        if (window.innerWidth > 700) {
+          this.settings.slidesToShow = 6
+          this.settings.slidesToScroll = 6
+        } else {
+        this.settings.slidesToShow = 3
+        this.settings.slidesToScroll = 3
+        }
+      },
      getList() {
          axios.get("https://api.tvmaze.com/shows")
         .then(response => {
@@ -182,6 +195,15 @@ import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'*/
 }
 .showname{
      margin: 20px 0 5px 40px
+}
+
+@media screen and (max-width: 700px) {
+  .showname{
+       margin: 20px 0 5px 15px
+  }
+  .card{
+    width : 90% !important
+  }
 }
 
 .zoom:hover {
